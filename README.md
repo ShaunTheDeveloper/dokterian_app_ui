@@ -1,16 +1,9 @@
 # dokterian
 
-A new Flutter project.
+source of this ui: https://www.figma.com/community/file/1106038596434269509 (figma design)
 
-## Getting Started
 
-This project is a starting point for a Flutter application.
+![Capture](https://github.com/ShaunTheDeveloper/dokterian_app_ui/assets/114850660/eb66a1d3-72e8-4fa4-a500-d795ef364adb)
 
-A few resources to get you started if this is your first Flutter project:
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
