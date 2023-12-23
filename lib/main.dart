@@ -1,4 +1,5 @@
 import 'package:dokterian/Home.dart';
+import 'package:dokterian/Schedule.dart';
 import 'package:dokterian/ThemeConfig.dart';
 import 'package:dokterian/gen/assets.gen.dart';
 import 'package:flutter/material.dart';
@@ -32,25 +33,42 @@ class MyApp extends StatelessWidget {
   }
 }
 
-class MainScreen extends StatelessWidget {
+class MainScreen extends StatefulWidget {
+  @override
+  State<MainScreen> createState() => _MainScreenState();
+}
+
+class _MainScreenState extends State<MainScreen> {
+  var index = 0;
   @override
   Widget build(BuildContext context) {
     var local = AppLocalizations.of(context)!;
+
     return Scaffold(
         body: Stack(
       children: [
         Positioned.fill(
           bottom: 80,
           child: IndexedStack(
-            index: 0,
-            children: [HomeScreen()],
+            index: index,
+            children: [
+              HomeScreen(),
+              ScheduleScreen(),
+            ],
           ),
         ),
         Positioned(
           bottom: 0,
           left: 0,
           right: 0,
-          child: BottomNavigation(),
+          child: BottomNavigation(
+            index: index,
+            onTab: (newIndex) {
+              setState(() {
+                index = newIndex;
+              });
+            },
+          ),
         )
       ],
     ));
@@ -58,6 +76,9 @@ class MainScreen extends StatelessWidget {
 }
 
 class BottomNavigation extends StatelessWidget {
+  Function(int) onTab;
+  int index;
+  BottomNavigation({required this.index, required this.onTab});
   @override
   Widget build(BuildContext context) {
     var colorSceme = Theme.of(context).colorScheme;
@@ -73,23 +94,31 @@ class BottomNavigation extends StatelessWidget {
           BottomNavigationItem(
               imageFilePath: Assets.img.homeActive.path,
               title: 'Home',
-              isActive: true,
-              onTap: () {}),
+              isActive: index == 0,
+              onTap: () {
+                onTab(0);
+              }),
           BottomNavigationItem(
               imageFilePath: Assets.img.calendar.path,
               title: 'Schedule',
-              isActive: false,
-              onTap: () {}),
+              isActive: index == 1,
+              onTap: () {
+                onTab(1);
+              }),
           BottomNavigationItem(
               imageFilePath: Assets.img.message.path,
               title: 'Chat',
-              isActive: false,
-              onTap: () {}),
+              isActive: index == 2,
+              onTap: () {
+                onTab(2);
+              }),
           BottomNavigationItem(
               imageFilePath: Assets.img.profile.path,
               title: 'Profile',
-              isActive: false,
-              onTap: () {}),
+              isActive: index == 3,
+              onTap: () {
+                onTab(3);
+              }),
         ],
       ),
     );
@@ -112,31 +141,34 @@ class BottomNavigationItem extends StatelessWidget {
   Widget build(BuildContext context) {
     var colorSceme = Theme.of(context).colorScheme;
     var textTheme = Theme.of(context).textTheme;
-    return Container(
-      height: 48,
-      padding: EdgeInsets.all(12),
-      decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(12),
-          color: isActive ? colorSceme.secondary : Colors.white),
-      child: Row(
-        crossAxisAlignment: CrossAxisAlignment.center,
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          SvgPicture.asset(
-            imageFilePath,
-            width: 24,
-            height: 24,
-            color: isActive ? colorSceme.primary : Colors.grey,
-          ),
-          SizedBox(
-            width: 8,
-          ),
-          if (isActive)
-            Text(
-              title,
-              style: textTheme.titleMedium,
-            )
-        ],
+    return InkWell(
+      onTap: onTap,
+      child: Container(
+        height: 48,
+        padding: EdgeInsets.all(12),
+        decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(12),
+            color: isActive ? colorSceme.secondary : Colors.white),
+        child: Row(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            SvgPicture.asset(
+              imageFilePath,
+              width: 24,
+              height: 24,
+              color: isActive ? colorSceme.primary : Colors.grey,
+            ),
+            SizedBox(
+              width: 8,
+            ),
+            if (isActive)
+              Text(
+                title,
+                style: textTheme.titleMedium,
+              )
+          ],
+        ),
       ),
     );
   }

@@ -12,7 +12,11 @@ class ThemeConfig {
           primary: primary,
           onPrimary: Colors.white,
           onSurface: Colors.white,
-          secondary: Color(0x1963B4FF)),
+          secondary: Color(0xff63B4FF).withOpacity(0.1),
+          primaryContainer: Color(0x1963B4FF),
+          secondaryContainer: Color(0xffFAFAFA),
+          onPrimaryContainer: Color(0xffff4894FE),
+          onSecondaryContainer: Color(0xff8696BB)),
       textTheme: english);
 
   ThemeData get dark => ThemeData(
